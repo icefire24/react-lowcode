@@ -5,7 +5,6 @@ import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 
 import "antd/dist/reset.css";
-import "@unocss/reset/tailwind.css";
 import "uno.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

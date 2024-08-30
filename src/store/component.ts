@@ -9,7 +9,9 @@ export interface Component {
 }
 
 interface State {
-  components: Component[]
+  components: Component[],
+  curComponentId: number | null,
+  setCurComponentId: (id: number | null) => void
 }
 
 interface Action {
@@ -19,6 +21,7 @@ interface Action {
 }
 
 export const useComponetsStore = create<State & Action>((set, get) => ({
+  curComponentId: null,
   components: [
     {
       id: 1,
@@ -30,6 +33,7 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
       ],
     },
   ],
+  setCurComponentId: id => set({ curComponentId: id }),
   addComponent: (component, parentId) =>
     set(state => {
       if (parentId) {

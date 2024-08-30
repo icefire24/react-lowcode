@@ -1,4 +1,5 @@
 import { Allotment } from 'allotment'
+import {Button} from 'antd'
 import { userStore } from "../use";
 import "allotment/dist/style.css";
 import Header from '../components/header';

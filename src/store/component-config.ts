@@ -28,7 +28,7 @@ export const useComponentConfigStore = create<State & Action>((set) => ({
             name: 'Button',
             defaultProps: {
                 type: 'primary',
-                text: '按钮'
+                text: '按钮1'
             },
             component: Button
         },

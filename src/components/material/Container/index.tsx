@@ -11,7 +11,9 @@ interface ContainerProps {
 
 const Container: FC<CommonComponentProps> = ({ id, name, children }) => {
     let { canDrop, dropRef }=useMaterialDrop(['Button','Container'],id)
-    return (<div ref={dropRef} className='border-1 border-[#000] min-h-[100px] p-[20px]'>{children}</div>);
+    return (<div
+        data-component-id={id}
+        ref={dropRef} className='b-solid border-1 border-[#000] min-h-[100px] p-[20px]'>{children}</div>);
 }
 
 export default Container;
