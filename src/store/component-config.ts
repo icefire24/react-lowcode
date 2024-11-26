@@ -1,63 +1,92 @@
-import {create} from 'zustand';
-import Button from '../components/material/Button';
-import Container from '../components/material/Container';
-import Page from '../components/material/Page';
+import { create } from 'zustand'
+import Button from '../components/material/Button'
+import Container from '../components/material/Container'
+import Page from '../components/material/Page'
 
 export interface ComponentSetter {
-    name: string;
-    label: string;
-    type: string;
-    [key: string]: any;
+  name: string
+  label: string
+  type: string
+  [key: string]: any
 }
 
 export interface ComponentConfig {
-    name: string;
-    defaultProps: Record<string, any>,
-    desc: string;
-    setter?: ComponentSetter[]
-    component: any
+  name: string
+  defaultProps: Record<string, any>
+  desc: string
+  setter?: ComponentSetter[]
+  stylesSetter?: ComponentSetter[]
+  component: any
 }
 
- 
 interface State {
-    componentConfig: {[key: string]: ComponentConfig};
+  componentConfig: { [key: string]: ComponentConfig }
 }
 
 interface Action {
-    registerComponent: (name: string, componentConfig: ComponentConfig) => void
+  registerComponent: (name: string, componentConfig: ComponentConfig) => void
 }
 
-export const useComponentConfigStore = create<State & Action>((set) => ({
-    componentConfig: {
-        Container: {
-            name: 'Container',
-            defaultProps: {},
-            desc: '容器',
-            component: Container
-        },
-        Button: {
-            name: 'Button',
-            desc: '按钮',
-            defaultProps: {
-                type: 'primary',
-                text: '按钮1'
-            },
-            component: Button
-        },
-        Page: {
-            name: 'Page',
-            desc: '页面',
-            defaultProps: {},
-            component: Page
-        }
+export const useComponentConfigStore = create<State & Action>(set => ({
+  componentConfig: {
+    Container: {
+      name: 'Container',
+      defaultProps: {},
+      desc: '容器',
+      component: Container,
     },
-    registerComponent: (name, componentConfig) => set((state) => {
-        return {
-            ...state,
-            componentConfig: {
-                ...state.componentConfig,
-                [name]: componentConfig
-            }
-        }
-    })
-}));
+    Button: {
+      name: 'Button',
+      desc: '按钮',
+      setter: [
+        {
+          name: 'type',
+          label: '按钮类型',
+          type: 'select',
+          options: [
+            { label: '主按钮', value: 'primary' },
+            { label: '次按钮', value: 'default' },
+          ],
+        },
+        {
+          name: 'text',
+          label: '文本',
+          type: 'input',
+        },
+      ],
+      stylesSetter: [
+        {
+          name: 'width',
+          label: '宽度',
+          type: 'inputNumber',
+        },
+        {
+          name: 'height',
+          label: '高度',
+          type: 'inputNumber',
+        },
+      ],
+      defaultProps: {
+        type: 'primary',
+        text: '按钮1',
+      },
+      component: Button,
+    },
+    Page: {
+      name: 'Page',
+      desc: '页面',
+      defaultProps: {},
+      component: Page,
+    },
+  },
+  registerComponent: (name, componentConfig) =>
+    set(state => {
+      return {
+        ...state,
+        componentConfig: {
+          ...state.componentConfig,
+          [name]: componentConfig,
+        },
+      }
+    }),
+}))

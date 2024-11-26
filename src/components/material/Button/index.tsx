@@ -8,9 +8,8 @@ interface ButtonProps {
     text: string
 }
 
-const Button: FC<CommonComponentProps> = ({id, type, text }) => {
-
-    return <AntdButton data-component-id={id} type={type}>{text}</AntdButton>
+const Button: FC<CommonComponentProps> = ({ id, type, text, styles }) => {
+  return <AntdButton data-component-id={id} type={type} style={styles}>{text}</AntdButton>
 
 }
 

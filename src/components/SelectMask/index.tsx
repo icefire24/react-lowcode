@@ -29,7 +29,10 @@ function SelectedMask({ containerClassName, portalWrapperClassName, componentId 
     const { components, curComponentId, curComponent, deleteComponent, setCurComponentId } = useComponetsStore();
 
     useEffect(() => {
-        updatePosition();
+        // components 变了，到渲染完成，然后再 getBoundingClientRect 拿到改变后的宽高是有一段时间的
+        setTimeout(() => {
+            updatePosition();
+        }, 500)
     }, [componentId,components]);
     
     function updatePosition() {

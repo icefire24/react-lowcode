@@ -1,18 +1,20 @@
+import { CSSProperties } from 'react'
 import { create } from 'zustand'
 
 export interface Component {
   id: number
-  name: string,
-  desc?: string,
+  name: string
+  desc?: string
   props?: any
+  styles?: CSSProperties
   children?: Component[]
   parentId?: number
 }
 
 interface State {
-  components: Component[],
-  curComponentId: number | null,
-  curComponent: Component | null,
+  components: Component[]
+  curComponentId: number | null
+  curComponent: Component | null
   setCurComponentId: (id: number | null) => void
 }
 
@@ -20,6 +22,11 @@ interface Action {
   addComponent: (component: Component, parentId?: number) => void
   deleteComponent: (componentId: number) => void
   updateComponentProps: (componentId: number, props: any) => void
+  updateComponentStyles: (
+    componentId: number,
+    styles: CSSProperties,
+    replace?: boolean,
+  ) => void
 }
 
 export const useComponetsStore = create<State & Action>((set, get) => ({
@@ -30,16 +37,16 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
       id: 1,
       name: 'Page',
       props: {},
+
       desc: '页面',
-      children: [
-        
-      ],
+      children: [],
     },
   ],
-  setCurComponentId: id => set({
-    curComponentId: id,
-    curComponent: getComponentById(id, get().components)
-   }),
+  setCurComponentId: id =>
+    set({
+      curComponentId: id,
+      curComponent: getComponentById(id, get().components),
+    }),
   addComponent: (component, parentId) =>
     set(state => {
       if (parentId) {
@@ -83,6 +90,16 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
       if (component) {
         component.props = { ...component.props, ...props }
 
+        return { components: [...state.components] }
+      }
+
+      return { components: [...state.components] }
+    }),
+  updateComponentStyles: (componentId, styles, replace) =>
+    set(state => {
+      const component = getComponentById(componentId, state.components)
+      if (component) {
+        component.styles = replace ? styles : { ...component.styles, ...styles }
         return { components: [...state.components] }
       }
 
