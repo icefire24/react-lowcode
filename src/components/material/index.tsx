@@ -15,8 +15,8 @@ const Material: FC<MaterialProps> = (props) => {
     return <div  >
         {
             components.map(item => {
-                const component = componentConfig[item].component
-                return <MaterialItem key={component.name} name={component.name}></MaterialItem>
+                const config = componentConfig[item]
+                return <MaterialItem desc={config.desc} key={config.name} name={config.name}></MaterialItem>
             })
         }
     </div>

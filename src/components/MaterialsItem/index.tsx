@@ -2,10 +2,11 @@ import { FC } from "react";
 import {useDrag} from 'react-dnd'
 
 interface MaterialItemProps {
-    name: string
+    name: string,
+    desc: string
 }
 
-const MaterialItem: FC<MaterialItemProps> = ({ name }) => {
+const MaterialItem: FC<MaterialItemProps> = ({desc, name }) => {
     const [, dragRef] = useDrag({
         type:name,
         item: {
@@ -24,7 +25,7 @@ const MaterialItem: FC<MaterialItemProps> = ({ name }) => {
         inline-block
         bg-white
         hover:bg-[#ccc]
-    ' >{name}</div>);
+    ' >{desc}</div>);
 }
 
 export default MaterialItem;

@@ -2,7 +2,8 @@ import { create } from 'zustand'
 
 export interface Component {
   id: number
-  name: string
+  name: string,
+  desc?: string,
   props?: any
   children?: Component[]
   parentId?: number
@@ -11,6 +12,7 @@ export interface Component {
 interface State {
   components: Component[],
   curComponentId: number | null,
+  curComponent: Component | null,
   setCurComponentId: (id: number | null) => void
 }
 
@@ -22,6 +24,7 @@ interface Action {
 
 export const useComponetsStore = create<State & Action>((set, get) => ({
   curComponentId: null,
+  curComponent: null,
   components: [
     {
       id: 1,
@@ -33,7 +36,10 @@ export const useComponetsStore = create<State & Action>((set, get) => ({
       ],
     },
   ],
-  setCurComponentId: id => set({ curComponentId: id }),
+  setCurComponentId: id => set({
+    curComponentId: id,
+    curComponent: getComponentById(id, get().components)
+   }),
   addComponent: (component, parentId) =>
     set(state => {
       if (parentId) {

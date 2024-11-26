@@ -1,19 +1,30 @@
-import { FC } from "react";
-import { useComponetsStore } from "../../store/component";
+import { Segmented } from 'antd';
+import { useState } from 'react';
+import { useComponetsStore } from '../../store/component';
+import ComponentAttr from './ComponentAttr';
+import  ComponentEvent  from './ComponentEvent';
+import  ComponentStyle  from './ComponentStyle';
 
-interface SettingProps {
+export default function Setting() {
 
-}
+    const { curComponentId } = useComponetsStore();
 
-const Setting: FC<SettingProps> = (props) => {
-    let { components } = useComponetsStore()
-    return (<div>
-        <pre>
+    const [key, setKey] = useState<string>('属性');
+
+    if (!curComponentId) return null;
+  
+    return <div >
+        <Segmented value={key} onChange={setKey} block options={['属性', '样式', '事件']} />
+        <div>
             {
-                JSON.stringify(components, null, 2)
+                key === '属性' && <ComponentAttr />
             }
-        </pre>
-    </div>);
+            {
+                key === '样式' && <ComponentStyle />
+            }
+            {
+                key === '事件' && <ComponentEvent />
+            }
+        </div>
+    </div>
 }
-
-export default Setting;

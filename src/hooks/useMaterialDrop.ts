@@ -9,10 +9,12 @@ export const useMaterialDrop = (accept:string[],id:number) => {
         accept,
         drop: (item: any, monitor) => {
             const didDrop = monitor.didDrop()
+            const config=componentConfig[item.type]
             if (didDrop) return
             addComponent({
                 id: Date.now(),
                 name: item.type,
+                desc: config?.desc,
                 props: componentConfig[item.type].defaultProps
             }, id)
         },

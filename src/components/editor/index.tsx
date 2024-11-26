@@ -13,17 +13,17 @@ const Editor: FC<EditorProps> = (props) => {
     let { componentConfig } = useComponentConfigStore()
     const [hoverComponentId, setHoverComponentId] = useState<number>();
     useEffect(() => {
-        addComponent({
-            id: 2,
-            name: 'Button',
-            props: {}
-        }, 1)
-        addComponent({
-            id: 3,
-            name: 'Container',
-            props: {},
+        // addComponent({
+        //     id: 2,
+        //     name: 'Button',
+        //     props: {}
+        // }, 1)
+        // addComponent({
+        //     id: 3,
+        //     name: 'Container',
+        //     props: {},
 
-        }, 1)
+        // }, 1)
     }, []);
     const handleMouseOver: MouseEventHandler = (e) => {
         const path = e.nativeEvent.composedPath()
@@ -79,14 +79,16 @@ const Editor: FC<EditorProps> = (props) => {
                 renderComponents(components)
             }
             {
-                hoverComponentId&&hoverComponentId!=curComponentId && <HoverMask componentId={hoverComponentId} containerClassName="edit-area" ></HoverMask>
+                hoverComponentId&&hoverComponentId!=curComponentId && <HoverMask portalWrapperClassName='portal-wrapper' componentId={hoverComponentId} containerClassName="edit-area" ></HoverMask>
             }
             {
                 curComponentId && <SelectMask
+                portalWrapperClassName="portal-wrapper"
                     componentId={curComponentId}
                     containerClassName="edit-area"
                 ></SelectMask>
             }
+            <div className="portal-wrapper"></div>
         </div>
     );
 
